@@ -30,30 +30,27 @@ const API_KEY = 'KIPACEH123';
 document.getElementById('form').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  const data = {
-    apiKey: API_KEY,
-    nama: document.getElementById('nama').value,
-    email: document.getElementById('email').value,
-    instansi: document.getElementById('instansi').value
-  };
+  const formData = new URLSearchParams();
+  formData.append('apiKey', API_KEY);
+  formData.append('nama', document.getElementById('nama').value);
+  formData.append('email', document.getElementById('email').value);
+  formData.append('instansi', document.getElementById('instansi').value);
 
   fetch(API_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
+    body: formData
   })
   .then(res => res.json())
   .then(res => {
     document.getElementById('result').innerText = res.message;
   })
   .catch(err => {
-    document.getElementById('result').innerText = 'Terjadi kesalahan';
     console.error(err);
+    document.getElementById('result').innerText = 'Terjadi kesalahan';
   });
 });
 </script>
+
 
 </body>
 </html>
