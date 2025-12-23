@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Pendaftaran</title>
+</head>
+<body>
+
+<h2>Form Pendaftaran Kegiatan</h2>
+
+<form id="form">
+  <label>Nama</label><br>
+  <input type="text" id="nama" required><br><br>
+
+  <label>Email</label><br>
+  <input type="email" id="email" required><br><br>
+
+  <label>Instansi</label><br>
+  <input type="text" id="instansi"><br><br>
+
+  <button type="submit">Daftar</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbzMdkk58YagSa1zcuAjrxbkZfNSBVdL_-GG-8O8fySbAdIjSK9Bp3WN7LwTHNNRHValyw/exec';
+const API_KEY = 'KIPACEH123';
+
+document.getElementById('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const data = {
+    apiKey: API_KEY,
+    nama: document.getElementById('nama').value,
+    email: document.getElementById('email').value,
+    instansi: document.getElementById('instansi').value
+  };
+
+  fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(res => {
+    document.getElementById('result').innerText = res.message;
+  })
+  .catch(err => {
+    document.getElementById('result').innerText = 'Terjadi kesalahan';
+    console.error(err);
+  });
+});
+</script>
+
+</body>
+</html>
